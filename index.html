@@ -1,0 +1,236 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feedback Form</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #e0e7ff, #f3e8ff);
+            padding: 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 500px;
+            background: white;
+            padding: 35px;
+            border-radius: 16px;
+            box-shadow: 0 10px 35px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #312e81;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 25px;
+            font-size: 14px;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #333;
+            font-size: 14px;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            font-size: 14px;
+            outline: none;
+            background: #fff;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            border-color: #6366f1;
+            box-shadow: 0 0 0 3px #6366f122;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .stars {
+            display: flex;
+            flex-direction: row-reverse;
+            justify-content: flex-end;
+            gap: 5px;
+        }
+
+        .stars input {
+            display: none;
+        }
+
+        .stars label {
+            font-size: 32px;
+            color: #d1d5db;
+            cursor: pointer;
+            margin: 0;
+        }
+
+        .stars label:hover,
+        .stars label:hover ~ label,
+        .stars input:checked ~ label {
+            color: #f59e0b;
+        }
+
+        button {
+            width: 100%;
+            padding: 14px;
+            background: #4f46e5;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        button:hover {
+            background: #3730a3;
+        }
+
+        #message {
+            display: none;
+            margin-top: 18px;
+            padding: 12px;
+            text-align: center;
+            color: #166534;
+            background: #dcfce7;
+            border-radius: 8px;
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 24px 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <h1>We Value Your Feedback!</h1>
+        <p class="subtitle">
+            Help us improve by sharing your experience.
+        </p>
+
+        <form id="feedbackForm">
+
+            <div class="form-group">
+                <label for="name">Full Name</label>
+                <input type="text" id="name"
+                       placeholder="Enter your name" required>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <input type="email" id="email"
+                       placeholder="Enter your email" required>
+            </div>
+
+            <div class="form-group">
+                <label>Rate Your Experience</label>
+
+                <div class="stars">
+                    <input type="radio" id="star5"
+                           name="rating" value="5" required>
+                    <label for="star5" title="5 stars">★</label>
+
+                    <input type="radio" id="star4"
+                           name="rating" value="4">
+                    <label for="star4" title="4 stars">★</label>
+
+                    <input type="radio" id="star3"
+                           name="rating" value="3">
+                    <label for="star3" title="3 stars">★</label>
+
+                    <input type="radio" id="star2"
+                           name="rating" value="2">
+                    <label for="star2" title="2 stars">★</label>
+
+                    <input type="radio" id="star1"
+                           name="rating" value="1">
+                    <label for="star1" title="1 star">★</label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="category">Feedback Category</label>
+                <select id="category" required>
+                    <option value="">Select a category</option>
+                    <option value="General">General Feedback</option>
+                    <option value="Suggestion">Suggestion</option>
+                    <option value="Complaint">Complaint</option>
+                    <option value="Bug">Report a Problem</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="feedback">Your Feedback</label>
+                <textarea id="feedback"
+                          placeholder="Write your feedback here..."
+                          required></textarea>
+            </div>
+
+            <button type="submit">Submit Feedback</button>
+
+            <div id="message" role="status" aria-live="polite"></div>
+
+        </form>
+    </div>
+
+    <script>
+        const form = document.getElementById("feedbackForm");
+        const message = document.getElementById("message");
+
+        form.addEventListener("submit", function(event) {
+            event.preventDefault();
+
+            const name = document.getElementById("name").value.trim();
+            const rating = document.querySelector(
+                'input[name="rating"]:checked'
+            ).value;
+
+            message.textContent =
+                "Thank you, " + name +
+                "! Your " + rating +
+                "-star feedback has been submitted successfully.";
+
+            message.style.display = "block";
+
+            form.reset();
+        });
+    </script>
+
+</body>
+</html>
